@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>测测你的TA有多"粘"人 — 情侣篇</title>
+    <meta name="description" content="通过10道情景题，生成你的专属占有欲人格卡牌。基于心理学焦虑-控制双维度模型，测测你们的关系是安全地带还是监控室？">
+    <meta name="keywords" content="占有欲测试,情侣测试,恋爱脑,暧昧,亲密关系">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- html2canvas for card export -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <!-- ========== 开屏页 ========== -->
+    <section id="landing" class="screen active">
+        <div class="landing-bg">
+            <div class="heartbeat-line"></div>
+            <div class="glitch-overlay"></div>
+        </div>
+        <div class="landing-content">
+            <div class="landing-badge">情侣篇 · 安全地带 or 监控室</div>
+            <h1 class="landing-title">
+                <span class="title-line1">测测你的TA</span>
+                <span class="title-line2">有多<span class="highlight">"粘"</span>人</span>
+            </h1>
+            <p class="landing-desc">10道情景题 · 双维度人格分析 · 生成专属卡牌</p>
+            <div class="landing-stats">
+                <div class="stat-item">
+                    <span class="stat-num" id="userCount">128,637</span>
+                    <span class="stat-label">人已测试</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">92%</span>
+                    <span class="stat-label">觉得很准</span>
+                </div>
+            </div>
+            <button class="btn-start" id="btnStart">
+                <span class="btn-text">开始测试</span>
+                <span class="btn-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </span>
+            </button>
+            <p class="landing-disclaimer">测试仅供娱乐，现实中的爱需要包容</p>
+        </div>
+    </section>
+
+    <!-- ========== 测试页 ========== -->
+    <section id="quiz" class="screen">
+        <div class="quiz-header">
+            <div class="progress-info">
+                <span class="progress-label" id="progressLabel">TA的耐心还剩</span>
+                <span class="progress-percent" id="progressPercent">100%</span>
+            </div>
+            <div class="progress-bar-wrap">
+                <div class="progress-bar" id="progressBar"></div>
+                <div class="progress-glow" id="progressGlow"></div>
+            </div>
+            <div class="chain-visual">
+                <div class="chain-hearts">
+                    <span class="heart heart-left" id="heartLeft">&#10084;</span>
+                    <div class="chain-links" id="chainLinks">
+                        <span class="chain-link"></span>
+                        <span class="chain-link"></span>
+                        <span class="chain-link"></span>
+                        <span class="chain-link"></span>
+                        <span class="chain-link"></span>
+                    </div>
+                    <span class="heart heart-right" id="heartRight">&#10084;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-body">
+            <div class="question-counter">
+                <span id="currentQ">1</span> / <span id="totalQ">10</span>
+            </div>
+            <div class="question-card" id="questionCard">
+                <div class="question-scenario" id="questionScenario"></div>
+                <p class="question-text" id="questionText"></p>
+            </div>
+            <div class="options-list" id="optionsList">
+                <!-- options rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 分析过渡页 ========== -->
+    <section id="analyzing" class="screen">
+        <div class="analyzing-content">
+            <div class="scan-animation">
+                <div class="scan-ring ring1"></div>
+                <div class="scan-ring ring2"></div>
+                <div class="scan-ring ring3"></div>
+                <div class="scan-icon">&#128269;</div>
+            </div>
+            <h2 class="analyzing-title">正在分析你们的关系模式...</h2>
+            <div class="analyzing-steps">
+                <div class="step" id="step1">
+                    <span class="step-dot"></span>
+                    <span class="step-text">扫描焦虑信号...</span>
+                </div>
+                <div class="step" id="step2">
+                    <span class="step-dot"></span>
+                    <span class="step-text">测量控制频率...</span>
+                </div>
+                <div class="step" id="step3">
+                    <span class="step-dot"></span>
+                    <span class="step-text">匹配人格档案...</span>
+                </div>
+                <div class="step" id="step4">
+                    <span class="step-dot"></span>
+                    <span class="step-text">生成专属卡牌...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== 结果页 ========== -->
+    <section id="result" class="screen">
+        <div class="result-content">
+            <!-- 可截图保存的卡片区域 -->
+            <div class="card-wrapper" id="cardWrapper">
+                <div class="result-card" id="resultCard">
+                    <div class="card-header">
+                        <span class="card-module">情侣篇 · 占有欲人格报告</span>
+                        <span class="card-badge" id="cardBadge"></span>
+                    </div>
+                    <div class="card-persona">
+                        <div class="persona-icon" id="personaIcon"></div>
+                        <h2 class="persona-name" id="personaName"></h2>
+                        <p class="persona-tagline" id="personaTagline"></p>
+                    </div>
+                    <div class="card-meters">
+                        <div class="meter-row">
+                            <span class="meter-label">占有欲</span>
+                            <div class="meter-stars" id="meterPossessive"></div>
+                        </div>
+                        <div class="meter-row">
+                            <span class="meter-label">控制欲</span>
+                            <div class="meter-stars" id="meterControl"></div>
+                        </div>
+                        <div class="meter-row">
+                            <span class="meter-label">焦虑感</span>
+                            <div class="meter-stars" id="meterAnxiety"></div>
+                        </div>
+                    </div>
+                    <div class="card-description" id="cardDescription"></div>
+                    <div class="card-match">
+                        <span class="match-label">最佳配对</span>
+                        <span class="match-value" id="matchValue"></span>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-watermark">测测你的TA有多"粘"人</span>
+                        <span class="card-qr-hint">长按保存 · 分享给TA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 操作区 -->
+            <div class="result-actions">
+                <button class="btn-save" id="btnSave">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                    </svg>
+                    长按保存卡片
+                </button>
+                <button class="btn-share" id="btnShare">
+                    @TA 来看看你的占有欲合格吗？
+                </button>
+                <button class="btn-retry" id="btnRetry">重新测试</button>
+            </div>
+
+            <!-- 引导区 -->
+            <div class="result-cta">
+                <p class="cta-text">你们的关系进入了倦怠期？</p>
+                <p class="cta-sub">试试<strong>暧昧篇</strong>，找回初恋的感觉</p>
+                <div class="cta-modules">
+                    <div class="module-card module-ambiguous">
+                        <span class="module-tag">即将上线</span>
+                        <span class="module-name">暧昧篇 · 迷雾森林</span>
+                    </div>
+                    <div class="module-card module-marriage">
+                        <span class="module-tag">即将上线</span>
+                        <span class="module-name">夫妻篇 · 围城内外</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio elements for interaction sounds -->
+    <audio id="soundClick" preload="auto"></audio>
+    <audio id="soundResult" preload="auto"></audio>
+
+    <script src="js/questions.js"></script>
+    <script src="js/results.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
