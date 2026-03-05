@@ -61,6 +61,8 @@
     function init() {
         els.totalQ.textContent = QUESTIONS.length;
         bindEvents();
+        initCodeModal();
+        initSidebar();
         animateUserCount();
     }
 
@@ -94,8 +96,85 @@
         }, 30);
     }
 
+    // ============ Redemption Code Modal ============
+    const VALID_CODE = '2024love';
+
+    const modalEls = {
+        modal: $('#codeModal'),
+        btnShowInput: $('#btnShowInput'),
+        inputArea: $('#codeInputArea'),
+        input: $('#codeInput'),
+        btnSubmit: $('#btnSubmitCode'),
+        error: $('#codeError')
+    };
+
+    function showCodeModal() {
+        modalEls.modal.classList.add('active');
+        // Reset state
+        modalEls.inputArea.classList.add('hidden');
+        modalEls.error.classList.add('hidden');
+        modalEls.input.value = '';
+    }
+
+    function hideCodeModal() {
+        modalEls.modal.classList.remove('active');
+    }
+
+    function initCodeModal() {
+        modalEls.btnShowInput.addEventListener('click', () => {
+            modalEls.inputArea.classList.remove('hidden');
+            modalEls.btnShowInput.classList.add('hidden');
+            modalEls.input.focus();
+        });
+
+        modalEls.btnSubmit.addEventListener('click', submitCode);
+        modalEls.input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') submitCode();
+        });
+    }
+
+    function submitCode() {
+        const val = modalEls.input.value.trim();
+        if (val === VALID_CODE) {
+            hideCodeModal();
+            proceedToQuiz();
+        } else {
+            modalEls.error.classList.remove('hidden');
+            modalEls.input.style.borderColor = 'var(--red)';
+            setTimeout(() => {
+                modalEls.input.style.borderColor = '';
+            }, 1500);
+        }
+    }
+
+    // ============ Sidebar Menu ============
+    function initSidebar() {
+        const hamburger = $('#hamburgerBtn');
+        const sidebar = $('#sidebar');
+        const overlay = $('#sidebarOverlay');
+        const closeBtn = $('#sidebarClose');
+
+        function openSidebar() {
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        hamburger.addEventListener('click', openSidebar);
+        closeBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+    }
+
     // ============ Quiz Flow ============
     function startQuiz() {
+        showCodeModal();
+    }
+
+    function proceedToQuiz() {
         state.currentQuestion = 0;
         state.answers = [];
         state.totalAnxiety = 0;
@@ -361,7 +440,7 @@
     }
 
     function retryQuiz() {
-        startQuiz();
+        proceedToQuiz();
     }
 
     // ============ Toast ============

@@ -190,6 +190,55 @@
         </div>
     </section>
 
+    <!-- ========== 右上角汉堡菜单按钮 ========== -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="菜单">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </button>
+
+    <!-- ========== 侧边栏菜单 ========== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose">&times;</button>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link" id="linkGuide">
+                <span class="sidebar-icon">📖</span>
+                <span>使用指南</span>
+            </a>
+            <a href="#" class="sidebar-link" id="linkScience">
+                <span class="sidebar-icon">🔬</span>
+                <span>科学依据</span>
+            </a>
+            <a href="#" class="sidebar-link" id="linkXiaohongshu">
+                <span class="sidebar-icon">📕</span>
+                <span>小红书主页</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- ========== 兑换码弹窗 ========== -->
+    <div class="modal-overlay" id="codeModal">
+        <div class="modal-card">
+            <h3 class="modal-title">🔒 需要兑换码</h3>
+            <p class="modal-desc">获取兑换码后即可开始测试</p>
+            <div class="modal-buttons">
+                <a href="#" class="modal-btn modal-btn-xhs" id="btnGetXhs">
+                    <span>📕 小红书获取</span>
+                </a>
+                <a href="#" class="modal-btn modal-btn-xianyu" id="btnGetXianyu">
+                    <span>🐟 闲鱼获取</span>
+                </a>
+            </div>
+            <button class="modal-btn modal-btn-input" id="btnShowInput">输入兑换码</button>
+            <div class="modal-input-area hidden" id="codeInputArea">
+                <input type="text" class="modal-input" id="codeInput" placeholder="请输入兑换码" maxlength="20" autocomplete="off">
+                <button class="modal-btn modal-btn-submit" id="btnSubmitCode">确认</button>
+                <p class="modal-error hidden" id="codeError">兑换码错误，请重新输入</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Audio elements for interaction sounds -->
     <audio id="soundClick" preload="auto"></audio>
     <audio id="soundResult" preload="auto"></audio>
