@@ -1415,6 +1415,84 @@ body {
     margin: 0;
 }
 
+/* Content Modal (Guide / Science) */
+.content-modal-card {
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: left;
+    position: relative;
+    padding-top: 2.5rem;
+}
+
+.content-modal-card .modal-title {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.content-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid var(--gray-dark);
+    border-radius: 8px;
+    color: var(--gray);
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.content-modal-close:hover {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+.content-modal-body {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: rgba(240, 240, 245, 0.85);
+}
+
+.content-modal-body h4 {
+    color: var(--neon-green);
+    font-size: 0.95rem;
+    margin: 1rem 0 0.4rem;
+}
+
+.content-modal-body h4:first-child {
+    margin-top: 0;
+}
+
+.content-modal-body p {
+    margin-bottom: 0.6rem;
+    color: var(--gray);
+}
+
+.content-modal-body .highlight-text {
+    color: var(--red);
+    font-weight: 600;
+}
+
+.content-modal-body ul {
+    padding-left: 1.2rem;
+    margin-bottom: 0.6rem;
+}
+
+.content-modal-body li {
+    margin-bottom: 0.3rem;
+    color: var(--gray);
+}
+
+.content-modal-body li strong {
+    color: var(--white);
+}
+
 /* ============================================
    UTILITY
    ============================================ */

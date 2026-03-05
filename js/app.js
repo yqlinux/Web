@@ -148,11 +148,68 @@
     }
 
     // ============ Sidebar Menu ============
+    const contentPages = {
+        guide: {
+            title: '📖 使用指南',
+            html: `
+                <h4>1. 开始测试</h4>
+                <p>点击首页「开始测试」按钮，输入兑换码后即可进入测试。</p>
+                <h4>2. 回答问题</h4>
+                <p>共 <strong>10 道情景题</strong>，每题描述一个恋爱中的真实场景，选择最符合你/TA 反应的选项即可。</p>
+                <ul>
+                    <li><strong>没有对错</strong>，选最真实的那个</li>
+                    <li>每道题选完后自动进入下一题</li>
+                    <li>上方进度条显示当前进度</li>
+                </ul>
+                <h4>3. 查看结果</h4>
+                <p>系统会根据 <span class="highlight-text">焦虑维度</span> 和 <span class="highlight-text">控制维度</span> 两个指标，生成你的专属占有欲人格卡牌。</p>
+                <h4>4. 保存 & 分享</h4>
+                <ul>
+                    <li><strong>长按保存卡片</strong>：将卡牌保存为图片</li>
+                    <li><strong>分享给TA</strong>：自动复制文案，发给你的另一半</li>
+                    <li>也可以点击「重新测试」再测一次</li>
+                </ul>
+                <h4>5. 获取兑换码</h4>
+                <p>关注我们的小红书账号或闲鱼店铺，即可免费获取兑换码。</p>
+            `
+        },
+        science: {
+            title: '🔬 科学依据',
+            html: `
+                <h4>测试模型</h4>
+                <p>本测试基于心理学中的 <span class="highlight-text">成人依恋理论（Adult Attachment Theory）</span>，结合亲密关系中的焦虑-回避双维度模型设计。</p>
+                <h4>焦虑维度</h4>
+                <p>衡量个体在亲密关系中的 <strong>不安全感</strong> 程度：</p>
+                <ul>
+                    <li>是否过度担心被抛弃</li>
+                    <li>是否需要反复确认对方的感情</li>
+                    <li>是否对伴侣的行为过度敏感</li>
+                </ul>
+                <h4>控制维度</h4>
+                <p>衡量个体在关系中的 <strong>主导欲</strong> 和 <strong>边界意识</strong>：</p>
+                <ul>
+                    <li>是否试图限制伴侣的社交</li>
+                    <li>是否有查看对方手机的冲动</li>
+                    <li>是否需要掌握伴侣的行踪</li>
+                </ul>
+                <h4>人格分类</h4>
+                <p>根据两个维度的得分高低，划分为不同的占有欲人格类型，每种类型都有独特的关系模式和相处建议。</p>
+                <h4>声明</h4>
+                <p>本测试仅供 <span class="highlight-text">娱乐参考</span>，不构成任何心理诊断。如有情感困扰，建议寻求专业心理咨询师的帮助。</p>
+            `
+        }
+    };
+
     function initSidebar() {
         const hamburger = $('#hamburgerBtn');
         const sidebar = $('#sidebar');
         const overlay = $('#sidebarOverlay');
         const closeBtn = $('#sidebarClose');
+
+        const contentModal = $('#contentModal');
+        const contentModalClose = $('#contentModalClose');
+        const contentModalTitle = $('#contentModalTitle');
+        const contentModalBody = $('#contentModalBody');
 
         function openSidebar() {
             sidebar.classList.add('active');
@@ -164,9 +221,44 @@
             overlay.classList.remove('active');
         }
 
+        function showContentModal(key) {
+            const page = contentPages[key];
+            contentModalTitle.textContent = page.title;
+            contentModalBody.innerHTML = page.html;
+            contentModal.classList.add('active');
+            closeSidebar();
+        }
+
+        function hideContentModal() {
+            contentModal.classList.remove('active');
+        }
+
         hamburger.addEventListener('click', openSidebar);
         closeBtn.addEventListener('click', closeSidebar);
         overlay.addEventListener('click', closeSidebar);
+
+        // 侧边栏链接事件
+        $('#linkGuide').addEventListener('click', (e) => {
+            e.preventDefault();
+            showContentModal('guide');
+        });
+
+        $('#linkScience').addEventListener('click', (e) => {
+            e.preventDefault();
+            showContentModal('science');
+        });
+
+        $('#linkXiaohongshu').addEventListener('click', (e) => {
+            e.preventDefault();
+            closeSidebar();
+            showToast('小红书搜索「测测你的TA有多粘人」关注我们');
+        });
+
+        // 内容弹窗关闭
+        contentModalClose.addEventListener('click', hideContentModal);
+        contentModal.addEventListener('click', (e) => {
+            if (e.target === contentModal) hideContentModal();
+        });
     }
 
     // ============ Quiz Flow ============
